@@ -43,13 +43,13 @@ class _AuthScreenState extends State<AuthScreen> {
                   radius: 80,
                 ),
                 child: CircleAvatar(
+                  backgroundColor: Color(0xff333333),
+                  radius: 80,
                   child: Icon(
                     Icons.person,
                     color: Color(0xff4e5ae8),
                     size: 100,
                   ),
-                  backgroundColor: Color(0xff333333),
-                  radius: 80,
                 ),
               ),
               SizedBox(height: 20),
@@ -70,6 +70,10 @@ class _AuthScreenState extends State<AuthScreen> {
               Divider(thickness: 2),
               SizedBox(height: 20),
               AppTextField(label: "Enter Your Name"),
+              SizedBox(height: 20),
+
+              AppButton(title: "Submit", onPressed: (){}),
+
             ],
           ),
         ),
