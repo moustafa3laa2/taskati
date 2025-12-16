@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taskati/screens/home_screen.dart';
 import 'package:taskati/widgets/app_text_field.dart';
 
 import '../widgets/app_button.dart';
@@ -72,7 +73,9 @@ class _AuthScreenState extends State<AuthScreen> {
               AppTextField(label: "Enter Your Name"),
               SizedBox(height: 20),
 
-              AppButton(title: "Submit", onPressed: (){}),
+              AppButton(title: "Submit", onPressed: (){
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomeScreen()), (route) => false,);
+              }),
 
             ],
           ),
