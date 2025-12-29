@@ -44,7 +44,8 @@ class DayContainer extends StatelessWidget {
               Text(
                 dayOfWeek,
                 style: TextStyle(
-                  fontSize: 22,
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: isSelected ? Colors.white : Colors.black,
                 ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taskati/screens/add_task_screen.dart';
+import 'package:taskati/widgets/add_task_button.dart';
 import 'package:taskati/widgets/custom_app_bar.dart';
 import 'package:taskati/widgets/day_container.dart';
 import 'package:taskati/widgets/task_container.dart';
@@ -38,29 +40,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Color(0xff4e5ae8),
-                      borderRadius: BorderRadiusGeometry.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.add, color: Colors.white),
-                          Text(
-                            " Add Task",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  AddTaskButton(),
                 ],
               ),
 
@@ -96,3 +76,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
