@@ -73,10 +73,16 @@ class _AuthScreenState extends State<AuthScreen> {
               AppTextField(label: "Enter Your Name"),
               SizedBox(height: 20),
 
-              AppButton(title: "Submit", onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomeScreen()), (route) => false,);
-              }),
-
+              AppButton(
+                title: "Submit",
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (route) => false,
+                  );
+                },
+              ),
             ],
           ),
         ),

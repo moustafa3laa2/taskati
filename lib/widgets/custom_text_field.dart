@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final Widget? suffixIcon;
   final bool readOnly;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     this.maxLines = 1,
     this.readOnly = false,
+    this.controller,
   });
 
   @override
@@ -27,6 +29,7 @@ class CustomTextField extends StatelessWidget {
         ),
         SizedBox(height: 10),
         TextFormField(
+          controller: controller,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           readOnly: readOnly,
           validator: (value) {

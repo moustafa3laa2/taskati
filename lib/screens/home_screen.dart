@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:taskati/models/add_task_model.dart';
 import 'package:taskati/screens/add_task_screen.dart';
 import 'package:taskati/widgets/add_task_button.dart';
 import 'package:taskati/widgets/custom_app_bar.dart';
 import 'package:taskati/widgets/day_container.dart';
 import 'package:taskati/widgets/task_container.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +47,17 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  AddTaskButton(),
+                  AddTaskButton(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddTaskScreen(),
+                        ),
+                      );
+                      setState(() {});
+                    },
+                  ),
                 ],
               ),
 
@@ -60,14 +77,19 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(height: 10),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return TaskContainer();
-                  },
+              Visibility(
+                visible: tasks.isEmpty,
+
+                replacement: Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(height: 10),
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      return TaskContainer(task: tasks[index]);
+                    },
+                  ),
                 ),
+                child: Lottie.asset("assets/images/empty_task.json"),
               ),
             ],
           ),
@@ -76,4 +98,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

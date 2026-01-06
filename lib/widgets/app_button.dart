@@ -10,7 +10,7 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(MediaQuery.of(context).size.width*0.7, 60),
+        minimumSize: Size(MediaQuery.of(context).size.width * 0.7, 60),
         backgroundColor: Color(0xff4e5ae8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(6),

@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import '../screens/add_task_screen.dart';
 
 class AddTaskButton extends StatelessWidget {
-  const AddTaskButton({
-    super.key,
-  });
+  final void Function()? onTap;
+  const AddTaskButton({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTaskScreen(),),);
-      },
+      onTap: onTap,
       child: Container(
         height: 50,
         decoration: BoxDecoration(

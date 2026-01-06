@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:taskati/models/add_task_model.dart';
 
 class TaskContainer extends StatelessWidget {
-  const TaskContainer({super.key});
+  final AddTaskModel task;
+  const TaskContainer({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Color(0xff4e5ae8),
+        color: task.color,
         borderRadius: BorderRadiusGeometry.circular(20),
       ),
       child: Row(
@@ -18,7 +20,7 @@ class TaskContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Flutter Task - 1",
+                task.title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -31,13 +33,13 @@ class TaskContainer extends StatelessWidget {
                   Icon(Icons.alarm, color: Colors.white),
                   SizedBox(width: 10),
                   Text(
-                    "06:19 AM - 06:40 AM",
+                    "${task.startTime} - ${task.endTime}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ],
               ),
               Text(
-                "i will do this task",
+                task.description,
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],
@@ -51,7 +53,7 @@ class TaskContainer extends StatelessWidget {
           RotatedBox(
             quarterTurns: 3,
             child: Text(
-              "TODO",
+              task.status,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
