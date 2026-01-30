@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:taskati/constants.dart';
 import 'package:taskati/models/add_task_model.dart';
+import 'package:taskati/models/user_model.dart';
 import 'package:taskati/screens/add_task_screen.dart';
 import 'package:taskati/widgets/add_task_button.dart';
 import 'package:taskati/widgets/custom_app_bar.dart';
@@ -15,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  UserModel? user = Hive.box<UserModel>(Constants.userModel).getAt(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
-              CustomAppBar(),
+              CustomAppBar(user: user,),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

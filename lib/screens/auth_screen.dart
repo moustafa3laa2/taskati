@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taskati/constants.dart';
+import 'package:taskati/models/user_model.dart';
 import 'package:taskati/screens/home_screen.dart';
 import 'package:taskati/widgets/app_text_field.dart';
-
 import '../widgets/app_button.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -27,6 +29,26 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {});
   }
 
+  addUser() async{
+  var user = Hive.box<UserModel>(Constants.userModel);
+  await user.clear();
+  user.add(
+  UserModel(
+  image: photo?.path ?? "",
+  name: nameController.text,
+  ),
+  ).then((v) {
+  Navigator.pushAndRemoveUntil(
+  context,
+  MaterialPageRoute(builder: (context) => HomeScreen()),
+  (route) => false,
+  );
+  }).catchError((e) {
+  print("error is $e");
+  });
+}
+
+  TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,17 +92,29 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(height: 20),
               Divider(thickness: 2),
               SizedBox(height: 20),
-              AppTextField(label: "Enter Your Name"),
+              AppTextField(
+                label: "Enter Your Name",
+                controller: nameController,
+              ),
               SizedBox(height: 20),
 
               AppButton(
                 title: "Submit",
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                    (route) => false,
-                  );
+                onPressed: ()  {
+                if(photo == null){
+                   showDialog(context: context, builder: (context){
+                     return AlertDialog(title: Icon(Icons.error,color: Colors.red,size: 50,),content:Text("Image is required",style:TextStyle(fontSize: 24),textAlign: TextAlign.center,),);
+                   });
+                   return;
+                }
+                if(nameController.toString().isEmpty){
+                  showDialog(context: context, builder: (context){
+                    return AlertDialog(title: Icon(Icons.error,color: Colors.red,size: 50,),content:Text("Name is required",style:TextStyle(fontSize: 24),textAlign: TextAlign.center),);
+                  });
+                  return;
+                }
+                addUser();
+
                 },
               ),
             ],

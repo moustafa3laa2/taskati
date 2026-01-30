@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:taskati/models/user_model.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  final UserModel? user;
+  const CustomAppBar({super.key,required this.user});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(
-        "Hello, Mustafa Alaa Ahmed",
+        "Hello, ${user?.name??""}",
         style: TextStyle(
           color: Color(0xff4e5ae8),
           fontSize: 24,
@@ -23,14 +27,8 @@ class CustomAppBar extends StatelessWidget {
       trailing: CircleAvatar(
         radius: 50,
 
-        child: ClipOval(
-          child: Image.asset(
-            height: 60,
-            width: 60,
-            fit: BoxFit.cover,
-            "assets/images/pic.jpg",
-          ),
-        ),
+        backgroundImage: Image.file(File(user?.image??"")).image,
+
       ),
     );
   }
