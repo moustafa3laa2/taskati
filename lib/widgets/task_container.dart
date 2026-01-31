@@ -10,7 +10,7 @@ class TaskContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: task.color,
+        color: Color(task.color),
         borderRadius: BorderRadiusGeometry.circular(20),
       ),
       child: Row(

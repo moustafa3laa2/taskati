@@ -1,3 +1,4 @@
 class Constants {
-  static const  String userModel = 'user';
+  static const  String userBox = 'userBox';
+  static const String tasksBox = 'tasksBox';
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:taskati/constants.dart';
 import 'package:taskati/models/add_task_model.dart';
 import 'package:taskati/widgets/app_button.dart';
 import '../widgets/custom_text_field.dart';
-import '../widgets/selected_color_widget.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -167,18 +168,23 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           );
                           return;
                         }
-                        tasks.add(
-                          AddTaskModel(
-                            title: titleController.text,
-                            startTime: startTimeController.text,
-                            endTime: endTimeController.text,
-                            description: descController.text,
-                            date: dateController.text,
-                            color: colors[activeIndex],
-                            status: "TODO",
-                          ),
-                        );
-                        Navigator.pop(context);
+                        Hive.box<AddTaskModel>(Constants.tasksBox).add(
+                              AddTaskModel(
+                                title: titleController.text,
+                                startTime: startTimeController.text,
+                                endTime: endTimeController.text,
+                                description: descController.text,
+                                date: dateController.text,
+                                color: colors[activeIndex].toARGB32(),
+                                status: "TODO",
+                              ),
+                            )
+                            .then((value) {
+                              Navigator.pop(context);
+                            })
+                            .catchError((e) {
+                              print("Error $e");
+                            });
                       }
                     },
                   ),

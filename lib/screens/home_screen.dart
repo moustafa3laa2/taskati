@@ -18,16 +18,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  UserModel? user = Hive.box<UserModel>(Constants.userModel).getAt(0);
+  UserModel? user = Hive.box<UserModel>(Constants.userBox).getAt(0);
   @override
   Widget build(BuildContext context) {
+    List<AddTaskModel> tasks = Hive.box<AddTaskModel>(
+      Constants.tasksBox,
+    ).values.toList();
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
-              CustomAppBar(user: user,),
+              CustomAppBar(user: user),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

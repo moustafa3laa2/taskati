@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +29,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   addUser() async{
-  var user = Hive.box<UserModel>(Constants.userModel);
+  var user = Hive.box<UserModel>(Constants.userBox);
   await user.clear();
   user.add(
   UserModel(
@@ -106,12 +105,6 @@ class _AuthScreenState extends State<AuthScreen> {
                      return AlertDialog(title: Icon(Icons.error,color: Colors.red,size: 50,),content:Text("Image is required",style:TextStyle(fontSize: 24),textAlign: TextAlign.center,),);
                    });
                    return;
-                }
-                if(nameController.toString().isEmpty){
-                  showDialog(context: context, builder: (context){
-                    return AlertDialog(title: Icon(Icons.error,color: Colors.red,size: 50,),content:Text("Name is required",style:TextStyle(fontSize: 24),textAlign: TextAlign.center),);
-                  });
-                  return;
                 }
                 addUser();
 

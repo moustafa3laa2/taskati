@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taskati/screens/home_screen.dart';
 import 'package:taskati/screens/splash_screen.dart';
 
 class Taskati extends StatelessWidget {
