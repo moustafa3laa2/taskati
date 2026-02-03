@@ -7,7 +7,9 @@ class StatusContainer extends StatelessWidget {
   const StatusContainer({
     super.key,
 
-    this.isSelected = false, required this.title, this.onTap,
+    this.isSelected = false,
+    required this.title,
+    this.onTap,
   });
 
   @override
@@ -18,7 +20,9 @@ class StatusContainer extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
-            color: isSelected ? Color(0xff4e5ae8) : Colors.grey.withOpacity(0.5),
+            color: isSelected
+                ? Color(0xff4e5ae8)
+                : Colors.grey.withOpacity(0.5),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Padding(
