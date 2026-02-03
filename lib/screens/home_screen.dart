@@ -5,10 +5,10 @@ import 'package:taskati/constants.dart';
 import 'package:taskati/models/add_task_model.dart';
 import 'package:taskati/models/user_model.dart';
 import 'package:taskati/screens/add_task_screen.dart';
-import 'package:taskati/widgets/add_task_button.dart';
 import 'package:taskati/widgets/custom_app_bar.dart';
 import 'package:taskati/widgets/day_container.dart';
 import 'package:taskati/widgets/task_container.dart';
+import '../widgets/add_task_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -92,7 +92,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     separatorBuilder: (context, index) => SizedBox(height: 10),
                     itemCount: tasks.length,
                     itemBuilder: (context, index) {
-                      return TaskContainer(task: tasks[index]);
+                      return TaskContainer(
+                        onDismissed: (direction) {
+                          if (direction == DismissDirection.startToEnd) {
+                            deleteTask(index);
+                          } else {
+                            updateTaskStatus(index);
+                          }
+                        },
+                        task: tasks[index],
+                      );
                     },
                   ),
                 ),
@@ -103,5 +112,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  var myBox = Hive.box<AddTaskModel>(Constants.tasksBox);
+  deleteTask(int index) {
+    myBox.deleteAt(index);
+    setState(() {});
+  }
+
+  updateTaskStatus(int index){
+    AddTaskModel? updateTask = myBox.getAt(index);
+    updateTask?.status = "complete";
+    updateTask?.save();
+    setState(() {
+
+    });
+
   }
 }

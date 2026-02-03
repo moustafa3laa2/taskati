@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool readOnly;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
@@ -16,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines = 1,
     this.readOnly = false,
     this.controller,
+    this.validator,
   });
 
   @override
@@ -32,20 +34,12 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           readOnly: readOnly,
-          validator: (value) {
-            if (value == null || value == '') {
-              return "this field is required";
-            } else {
-              return null;
-            }
-          },
+          validator: validator,
           maxLines: maxLines,
           decoration: InputDecoration(
             suffixIcon: suffixIcon,
             hintText: hintText,
-
             border: OutlineInputBorder(),
-
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Color(0xff4e5ae8)),

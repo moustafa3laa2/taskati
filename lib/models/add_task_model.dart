@@ -15,7 +15,7 @@ class AddTaskModel extends HiveObject{
   @HiveField(4)
   final String date;
   @HiveField(5)
-  final String status;
+  String status;
   @HiveField(6)
   int color;
 

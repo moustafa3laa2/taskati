@@ -26,6 +26,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   TextEditingController dateController = TextEditingController();
   TextEditingController startTimeController = TextEditingController();
   TextEditingController endTimeController = TextEditingController();
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +53,38 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             spacing: 10,
             children: [
               CustomTextField(
+                validator: (value) {
+                  if (value == null || value == '') {
+                    return "this field is required";
+                  } else {
+                    return null;
+                  }
+                },
                 controller: titleController,
                 title: "Title",
                 hintText: "Enter Title",
               ),
               CustomTextField(
+                validator: (value) {
+                  if (value == null || value == '') {
+                    return "this field is required";
+                  } else {
+                    return null;
+                  }
+                },
                 controller: descController,
                 title: "Description",
                 hintText: "Enter Description",
                 maxLines: 3,
               ),
               CustomTextField(
+                validator: (value) {
+                  if (value == null || value == '') {
+                    return "this field is required";
+                  } else {
+                    return null;
+                  }
+                },
                 controller: dateController,
                 readOnly: true,
                 title: "Date",
@@ -85,6 +109,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 children: [
                   Expanded(
                     child: CustomTextField(
+                      validator: (value) {
+                        if (value == null || value == '') {
+                          return "this field is required";
+                        } else {
+                          return null;
+                        }
+                      },
                       controller: startTimeController,
                       readOnly: true,
                       title: "Start Time",
@@ -96,6 +127,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             context: context,
                             initialTime: TimeOfDay.now(),
                           ).then((value) {
+                            startTime = value;
                             startTimeController.text =
                                 value?.format(context) ?? "".toString();
                           });
@@ -106,7 +138,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   SizedBox(width: 10),
                   Expanded(
-                    child: CustomTextField(
+                    child: CustomTextField(validator: (value){
+                      if(startTime?.isAfter(endTime!)??false){
+                        return "end time should be after start time";
+                      }
+                    },
                       controller: endTimeController,
                       readOnly: true,
                       title: "End Time",
@@ -118,6 +154,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             context: context,
                             initialTime: TimeOfDay.now(),
                           ).then((value) {
+                            endTime = value;
                             endTimeController.text =
                                 value?.format(context) ?? "".toString();
                           });
@@ -196,4 +233,5 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ),
     );
   }
+
 }
