@@ -6,9 +6,9 @@ import 'package:taskati/models/add_task_model.dart';
 import 'package:taskati/models/user_model.dart';
 import 'package:taskati/screens/add_task_screen.dart';
 import 'package:taskati/widgets/custom_app_bar.dart';
-import 'package:taskati/widgets/day_container.dart';
 import 'package:taskati/widgets/task_container.dart';
 import '../widgets/add_task_button.dart';
+import '../widgets/status_container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,11 +19,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   UserModel? user = Hive.box<UserModel>(Constants.userBox).getAt(0);
+  List<String> statusList = ["ALL", "TODO", "COMPLETE"];
+  int currentActiveIndex = 0;
+  List<AddTaskModel> tasks=[];
   @override
   Widget build(BuildContext context) {
-    List<AddTaskModel> tasks = Hive.box<AddTaskModel>(
-      Constants.tasksBox,
-    ).values.toList();
+    if(currentActiveIndex==0){
+      tasks = Hive.box<AddTaskModel>(Constants.tasksBox,).values.toList();
+    }else if(currentActiveIndex==1){
+      tasks = Hive.box<AddTaskModel>(Constants.tasksBox,).values.toList().where((e)=>e.status.toLowerCase()=="todo").toList();
+    }else{
+      tasks = Hive.box<AddTaskModel>(Constants.tasksBox,).values.toList().where((e)=>e.status.toLowerCase()=="complete").toList();
+
+    }
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,24 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "December 16/2025",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      Text(
-                        "Today",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "December 16/2025",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                   AddTaskButton(
                     onTap: () async {
@@ -70,19 +63,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
               SizedBox(height: 20),
               Row(
-                spacing: 10,
-                children: [
-                  DayContainer(
-                    month: "Dec",
-                    day: "15",
-                    dayOfWeek: "MON",
-                    isSelected: true,
+                children: List.generate(
+                  statusList.length,
+                  (index) => StatusContainer(
+                    isSelected: currentActiveIndex == index,
+                    onTap: () {
+                      setState(() {
+                        currentActiveIndex = index;
+                      });
+                    },
+
+                    title: statusList[index],
                   ),
-                  DayContainer(month: "Dec", day: "16", dayOfWeek: "TUE"),
-                  DayContainer(month: "Dec", day: "17", dayOfWeek: "WED"),
-                  DayContainer(month: "Dec", day: "18", dayOfWeek: "THU"),
-                ],
+                ),
               ),
+
               SizedBox(height: 20),
               Visibility(
                 visible: tasks.isEmpty,
@@ -120,13 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
-  updateTaskStatus(int index){
+  updateTaskStatus(int index) {
     AddTaskModel? updateTask = myBox.getAt(index);
     updateTask?.status = "complete";
     updateTask?.save();
-    setState(() {
-
-    });
-
+    setState(() {});
   }
 }
